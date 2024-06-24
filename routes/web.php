@@ -21,7 +21,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::post('/internships', [InternshipController::class, 'store']);
 Route::get('/internships', [InternshipController::class, 'index']);
 
 

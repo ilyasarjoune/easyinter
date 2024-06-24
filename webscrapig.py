@@ -1,10 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
+import json
 
 def extract(page):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-        'X-CSRF-TOKEN': 'DMUZHp6ljzGb0LfCclFPfLsbumvTOUfl10izrTN8'  # Replace with the actual CSRF token
     }
     url = f'https://www.linkedin.com/jobs/search?keywords=Stage&location=Morocco&geoId=102787409&trk=public_jobs_jobs-search-bar_search-submit&position=2&pageNum={page}&currentJobId=3954128721'
     r = requests.get(url, headers=headers)
@@ -27,11 +27,11 @@ def transform(soup):
         datef = date_tag.text.strip() if date_tag else 'No date available'
 
         job = {
-            'Title': title,
-            'Company': company,
-            'Location': location,
-            'Date': datef,
-            'Link': href
+            'title': title,
+            'company': company,
+            'location': location,
+            'date': datef,
+            'link': href
         }
         job_list.append(job)
 
@@ -41,8 +41,11 @@ def transform(soup):
 c = extract(0)
 job_data = transform(c)
 
+# Print the job data to inspect it
+# print(json.dumps(job_data, indent=2))
+
 # Send data to Laravel API
-api_url = 'http://127.0.0.1:8000/internships'
+api_url = 'http://127.0.0.1:8000/api/internships'
 headers = {'Content-Type': 'application/json'}
 
 try:

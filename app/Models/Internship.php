@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Internship extends Model
 {
     use HasFactory;
+    protected $fillable = ['title', 'company', 'location', 'date', 'link'];
+    protected $guarded = ['id'];
+
+    public $timestamps = true;
+
+    protected $primaryKey = 'id';
+
+    protected $table = 'internships';
+
+    protected $unique = ['link'];
 }

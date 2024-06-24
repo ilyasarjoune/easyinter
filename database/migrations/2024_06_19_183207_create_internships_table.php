@@ -17,9 +17,11 @@ return new class extends Migration
         $table->string('company');
         $table->string('location');
         $table->string('date');
-        $table->string('link');
+        $table->string('link', 500)->unique(); // Increase length to 500 characters or more as needed
         $table->timestamps();
+        $table->unique(['title', 'company']);
     });
+    
 }
 
 
